@@ -6,5 +6,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'stroop';
+  title = 'Stroop Game';
+  
+  constructor() {
+  }
+
+  ngOnInit() {
+  }
+
+  onActivate(event) {
+      window.scroll(0, 0);
+  }
 }

@@ -1,0 +1,94 @@
+<div class="bg-primary">
+    <div class="container pt-5">
+        <div class="form">
+            <div class="row justify-content-center align-content-center">
+                <div class="col-6 border border-light rounded text-light">
+                    <form (ngSubmit)="registro(form.value)" #form="ngForm" role="form" class="align-content-center pt-2 pb-2">
+                        <p class="text-center font-weight-bold">Datos del Paciente</p>
+                        <div class="form-group">
+                            <input type="text" name="cedula" class="form-control" id="cedula" data-rule="minlen:4"
+                                placeholder="Cedula" data-msg="Ingrese cédula" ngModel required />
+                            <div class="validate"></div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="nombre" class="form-control" id="nombre" data-rule="minlen:4"
+                                placeholder="Nombre" data-msg="Ingrese nombre completo" ngModel required />
+                            <div class="validate"></div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="sexo" class="form-control" id="sexo" data-rule="minlen:4"
+                                placeholder="Sexo" data-msg="Ingrese sexo" ngModel required />
+                            <div class="validate"></div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="edad" class="form-control" id="edad" data-rule="minlen:4"
+                                placeholder="Edad" data-msg="Ingrese edad" ngModel required />
+                            <div class="validate"></div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-4">Lateralidad:</div>
+                                <div class="col-8">
+                                    <select id="lateralidad" name="lateralidad" class="form-control"
+                                        placeholder="Lateralidad" ngModel>
+                                        <option *ngFor="let lateralidad of lateralidades" [value]="lateralidad.name"
+                                            placeholder="Lateralidad">
+                                            {{lateralidad.name}}
+                                        </option>
+                                    </select>
+                                    <div class="validate"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-4">Estudios:</div>
+                                <div class="col-8">
+                                    <select id="estudios" name="estudios" class="form-control"
+                                        placeholder="Nivel de estudios" ngModel>
+                                        <option *ngFor="let estudios of estudio" [value]="estudios.name">
+                                            {{estudios.name}}
+                                        </option>
+                                    </select>
+                                    <div class="validate"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-center font-weight-bold">Datos del Juego</p>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-4">Parte del cuerpo:</div>
+                                <div class="col-8">
+                                    <select id="parteCuerpo" name="parteCuerpo" class="form-control"
+                                        placeholder="Parte del cuerpo" ngModel>
+                                        <option *ngFor="let parteCuerpo of partesCuerpo" [value]="parteCuerpo.name">
+                                            {{parteCuerpo.name}}
+                                        </option>
+                                    </select>
+                                    <div class="validate"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-4">Consigna:</div>
+                                <div class="col-8">
+                                    <select id="consigna" name="consigna" class="form-control" placeholder="Consigna"
+                                        ngModel>
+                                        <option *ngFor="let consigna of consignas" [value]="consigna.name">
+                                            {{consigna.name}}
+                                        </option>
+                                    </select>
+                                    <div class="validate"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button class="btn btn-light">Registrar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
