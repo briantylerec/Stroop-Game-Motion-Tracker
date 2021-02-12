@@ -7,16 +7,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./registro.component.css']
 })
 export class RegistroComponent implements OnInit {
+  paciente: RegisterForm;
 
-  constructor(
-    private router: Router
-  ) { }
+  constructor( private router: Router) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
   }
 
   registro(body: RegisterForm) {
-    if (body.cedula == '' || body.consigna == '' ||  body.edad == '' ||  body.estudios == '' ||  body.fecha == '' ||  body.lateralidad == '' ||  body.nombre == '' ||  body.parteCuerpo == '' ||  body.sexo == ''){
+    if (body.cedula == '' || body.consigna == '' ||  body.edad == '' ||  body.estudios == '' ||  body.lateralidad == '' ||  body.nombre == '' ||  body.parteCuerpo == '' ||  body.sexo == ''){
       alert('Completa todos los campos!')
     } else {
       console.log(body)
@@ -55,7 +54,6 @@ export class RegisterForm {
   public sexo?:string;
   public edad?:string;
   public estudios?:string;
-  public fecha?:string;
 
   public lateralidad?:string;
   public parteCuerpo?:string;
