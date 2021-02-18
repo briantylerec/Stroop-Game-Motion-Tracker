@@ -9,7 +9,8 @@ import { SegundoNivelComponent } from './segundo-nivel/segundo-nivel.component';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InicioComponent } from './inicio/inicio.component';
-import { ResultadosComponent } from './resultados/resultados.component';
+import { AyudaComponent } from './ayuda/ayuda.component';
+import { AgradecimientoComponent } from './agradecimiento/agradecimiento.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ResultadosComponent } from './resultados/resultados.component';
     PrimerNivelComponent,
     SegundoNivelComponent,
     InicioComponent,
-    ResultadosComponent
+    AyudaComponent,
+    AgradecimientoComponent
   ],
   imports: [
     BrowserModule,

@@ -1,15 +1,10 @@
-<div style="background-color: #0077c0;">
+<div class="background">
     <div class="container pt-5 pb-5">
-        <div class="form">
+        <div class="form pt-5">
             <div class="row justify-content-center align-content-center">
                 <div class="col-6 border border-light rounded text-light">
                     <form (ngSubmit)="registro(form.value)" #form="ngForm" role="form" class="align-content-center pt-2 pb-2">
-                        <p class="text-center font-weight-bold">Datos del Paciente</p>
-                        <div class="form-group">
-                            <input type="text" name="cedula" class="form-control" id="cedula" data-rule="minlen:4"
-                                placeholder="Cedula" data-msg="Ingrese cédula" ngModel required />
-                            <div class="validate"></div>
-                        </div>
+                        <p class="text-center font-weight-bold pb-4 pt-2">Datos del Paciente</p>
                         <div class="form-group">
                             <input type="text" name="nombre" class="form-control" id="nombre" data-rule="minlen:4"
                                 placeholder="Nombre" data-msg="Ingrese nombre completo" ngModel required />
@@ -54,36 +49,7 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="text-center font-weight-bold">Datos del Juego</p>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-4">Parte del cuerpo:</div>
-                                <div class="col-8">
-                                    <select id="parteCuerpo" name="parteCuerpo" class="form-control"
-                                        placeholder="Parte del cuerpo" ngModel>
-                                        <option *ngFor="let parteCuerpo of partesCuerpo" [value]="parteCuerpo.name">
-                                            {{parteCuerpo.name}}
-                                        </option>
-                                    </select>
-                                    <div class="validate"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-4">Consigna:</div>
-                                <div class="col-8">
-                                    <select id="consigna" name="consigna" class="form-control" placeholder="Consigna"
-                                        ngModel>
-                                        <option *ngFor="let consigna of consignas" [value]="consigna.name">
-                                            {{consigna.name}}
-                                        </option>
-                                    </select>
-                                    <div class="validate"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="text-center">
+                        <div class="text-center pt-5 pb-2">
                             <button class="btn btn-light">Registrar</button>
                         </div>
                     </form>

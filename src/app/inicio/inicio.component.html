@@ -1,1 +1,21 @@
-<p>inicio works!</p>
+<div class="background">
+    <div class="container pt-5 pb-5">
+        <div class="form pt-5">
+            <div class="row justify-content-center align-content-center pt-5">
+                <div class="col-6 border border-light rounded text-light">
+                    <form (ngSubmit)="registro(form.value)" #form="ngForm" role="form" class="align-content-center pt-2 pb-2">
+                        <p class="text-center font-weight-bold pb-4 pt-2">Paciente</p>
+                        <div class="form-group">
+                            <input type="text" name="cedula" class="form-control" id="cedula" data-rule="minlen:4"
+                                placeholder="Ingrese cédula del paciente" data-msg="Ingrese cédula" ngModel required />
+                            <div class="validate"></div>
+                        </div>
+                        <div class="text-center pt-5 pb-2">
+                            <button class="btn btn-light">Iniciar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

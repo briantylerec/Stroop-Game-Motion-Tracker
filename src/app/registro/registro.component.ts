@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { Formulario } from '../app.component';
 
 @Component({
   selector: 'app-registro',
@@ -7,20 +8,22 @@ import { Router } from '@angular/router';
   styleUrls: ['./registro.component.css']
 })
 export class RegistroComponent implements OnInit {
-  paciente: RegisterForm;
+
+  @Output() next: EventEmitter<Formulario> = new EventEmitter<Formulario>();
 
   constructor( private router: Router) { }
 
   ngOnInit() {
   }
 
-  registro(body: RegisterForm) {
-    if (body.cedula == '' || body.consigna == '' ||  body.edad == '' ||  body.estudios == '' ||  body.lateralidad == '' ||  body.nombre == '' ||  body.parteCuerpo == '' ||  body.sexo == ''){
+  registro(body: RegistroForm) {
+    if (body.edad == '' ||  body.estudios == '' ||  body.lateralidad == '' ||  body.nombre == '' ||  body.sexo == ''){
       alert('Completa todos los campos!')
     } else {
       console.log(body)
       alert('Registro completo!')
-      this.router.navigate(['./primer-nivel']);
+      this.next.emit({ registro:body })
+      // this.router.navigate(['./ayuda']);
     }
   }
 
@@ -34,28 +37,13 @@ export class RegistroComponent implements OnInit {
     { name: 'Diestro' },
     { name: 'Zurdo' }
   ]
-
-  partesCuerpo: any[] = [
-    { name: 'Cabeza' },
-    { name: 'Mano' },
-    { name: 'Ojo' }
-  ]
-
-  consignas: any[] = [
-    { name: 'Escrita' },
-    { name: 'Acústica' },
-    { name: 'Visual' }
-  ]
 }
 
-export class RegisterForm {
-  public cedula?:string;
+export class RegistroForm {
   public nombre?:string;
   public sexo?:string;
   public edad?:string;
   public estudios?:string;
 
   public lateralidad?:string;
-  public parteCuerpo?:string;
-  public consigna?:string;
 } 

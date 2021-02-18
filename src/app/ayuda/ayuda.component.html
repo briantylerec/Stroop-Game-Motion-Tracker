@@ -1,0 +1,104 @@
+<div style="background-color: #0077c0;">
+    <div class="container pt-5 pb-5">
+        <div class="form">
+            <div class="row justify-content-center align-content-center">
+                <div class="col-10 border border-light rounded text-light">
+                    <form (ngSubmit)="registro(form.value)" #form="ngForm" role="form"
+                        class="align-content-center pt-2 pb-2">
+                        <div class="row">
+                            <div class="col">
+                                <h1 class="text-center">Tarea Stroop</h1>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <p class="text-center">
+                                    La tarea Stroop consiste en realizar la acción opuesta a la orden recibida.<br>
+                                    En el centro de la pantalla se mostrará una flecha con una dirección, y alrededor
+                                    varias
+                                    flechas en otras direcciones. <br>
+                                    El usuario deberá mover el cursor de la computadora hacia la flecha con la dirección
+                                    opuesta.<br>
+                                    El juego tiene 2 niveles, se repetirá varias veces y se calculará el tiempo de
+                                    respuesta
+                                    del usuario. <br><br>
+
+                                    Este juego se puede realizar usando diferentes dispositivos que capturen el
+                                    movimiento
+                                    corporal, en esta ocación se usará la camara web y un software para rastrear el
+                                    movimiento. <br><br>
+                                </p>
+                                <p class="text-center font-weight-bold">Software a usar</p>
+                                <p class="text-center">Asegúrese de tener instalado e iniciado el software CameraMouse
+                                    antes
+                                    de continuar <a class="text-white font-weight-bold"
+                                        href="http://www.cameramouse.org/downloads/CameraMouse2018Installer.exe">Clic
+                                        aquí
+                                        para descargar</a></p>
+                            </div>
+                        </div>
+
+                        <div class="row justify-content-center align-content-center">
+                            <div class="col-4">
+                                <p class="text-center font-weight-bold">Cabeza</p>
+                                <p class="text-center">Clic en la nariz para tener como punto de referencia.</p>
+                                <img class="w-100 pointer rounded-lg" src="../../assets/img/cam-head.jpg">
+                            </div>
+                            <div class="col-2"></div>
+                            <div class="col-4">
+                                <p class="text-center font-weight-bold">Mano</p>
+                                <p class="text-center">Clic en cualquier parte de la mano para tener como punto de
+                                    referencia.</p>
+                                <img class="w-100 pointer rounded-lg" src="../../assets/img/cam-hand.jpg">
+                            </div>
+                        </div><br>
+                        <p class="text-center">Una vez seleccionada la parte de referencia, esperar unos segundos e
+                            iniciar
+                            el juego.</p>
+                        <p class="text-center font-weight-bold">Datos del Juego</p><br>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-4">Parte del cuerpo:</div>
+                                        <div class="col-8">
+                                            <select id="parteCuerpo" name="parteCuerpo" class="form-control"
+                                                placeholder="Parte del cuerpo" ngModel>
+                                                <option *ngFor="let parteCuerpo of partesCuerpo"
+                                                    [value]="parteCuerpo.name">
+                                                    {{parteCuerpo.name}}
+                                                </option>
+                                            </select>
+                                            (*Parte del cuerpo a usar)
+                                            <div class="validate"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-4">Consigna:</div>
+                                        <div class="col-8">
+                                            <select id="consigna" name="consigna" class="form-control"
+                                                placeholder="Consigna" ngModel>
+                                                <option *ngFor="let consigna of consignas" [value]="consigna.name">
+                                                    {{consigna.name}}
+                                                </option>
+                                            </select>
+                                            (*Modo de interacción)
+                                            <div class="validate"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button class="btn btn-light">Iniciar juego</button>
+                        </div><br>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
