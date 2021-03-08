@@ -4,7 +4,7 @@
             <div class="row justify-content-center align-content-center">
                 <div class="col-6 border border-light rounded text-light">
                     <form (ngSubmit)="registro(form.value)" #form="ngForm" role="form" class="align-content-center pt-2 pb-2">
-                        <p class="text-center font-weight-bold pb-4 pt-2">Datos del Paciente</p>
+                        <p class="text-center font-weight-bold pb-4 pt-2">Datos del Paciente Nuevo</p>
                         <div class="form-group">
                             <input type="text" name="nombre" class="form-control" id="nombre" data-rule="minlen:4"
                                 placeholder="Nombre" data-msg="Ingrese nombre completo" ngModel required />
@@ -22,7 +22,7 @@
                         </div>
                         <div class="form-group">
                             <div class="row">
-                                <div class="col-4">Lateralidad:</div>
+                                <div class="col-4">Que mano usa más:</div>
                                 <div class="col-8">
                                     <select id="lateralidad" name="lateralidad" class="form-control"
                                         placeholder="Lateralidad" ngModel>
@@ -37,7 +37,7 @@
                         </div>
                         <div class="form-group">
                             <div class="row">
-                                <div class="col-4">Estudios:</div>
+                                <div class="col-4">Nivel de estudios:</div>
                                 <div class="col-8">
                                     <select id="estudios" name="estudios" class="form-control"
                                         placeholder="Nivel de estudios" ngModel>

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from "@angular/fire/firestore";
+import { AngularFirestore, AngularFirestoreDocument, DocumentSnapshot } from "@angular/fire/firestore";
+import { NgxSpinnerService } from 'ngx-spinner';
 import { Paciente } from '../modelos/paciente';
 
 @Injectable({
@@ -9,13 +10,21 @@ export class PacienteService {
 
   private dbPath = "pacientes";
 
-  constructor(private firestore: AngularFirestore) { }
+  constructor(
+    private db: AngularFirestore
+  ) { }
 
   getById(cedula: string) {
-    return this.firestore.collection(this.dbPath, ref => ref.where('paciente.cedula', '==', cedula)).snapshotChanges();
+    return this.db.collection(this.dbPath).doc(cedula).get();
   }
 
-  add(paciente: Paciente) {
-    return this.firestore.collection(this.dbPath).add(paciente);
+  getData(cedula: string){
+    return new Promise((resolve, reject)=>{
+      this.db.collection(this.dbPath).doc(cedula).get().subscribe((result:DocumentSnapshot<any>)=>{
+        const data = result.data(); 
+        console.log(data)
+        resolve(data);
+      },(e)=> reject(null));
+    });
   }
 }

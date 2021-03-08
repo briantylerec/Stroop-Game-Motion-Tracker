@@ -21,8 +21,9 @@
                 <div class="col-5 text-center">
                     <div class="row justify-content-md-center align-items-center">
                         <div class="col-6 text-center">
-                            <span type="text" id="text">{{texto}}</span>
-                            <img class="w-100 h-33 pointer rounded-lg" src='{{imagen}}'>
+                            <span *ngIf="consigna=='Escrita'" type="text" id="text">{{texto}}</span>
+                            <img *ngIf="consigna=='Visual'" class="w-100 h-33 pointer rounded-lg" src='{{imagen}}'>
+                            <img *ngIf="consigna=='Acústica'" class="w-75 h-33 pointer rounded-lg" src='{{imagen}}'>
                         </div>
                     </div>
                 </div>

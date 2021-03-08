@@ -3,8 +3,11 @@
 </Body> -->
 
 <app-inicio *ngIf="state==0" (next)="onNext($event)"></app-inicio>
-<app-registro *ngIf="state==1" (next)="onNext($event)"></app-registro>
-<app-ayuda *ngIf="state==2"  (next)="onNext($event)"></app-ayuda>
-<app-primer-nivel *ngIf="state==3" (next)="onNext($event)"></app-primer-nivel>
-<app-segundo-nivel *ngIf="state==4" (next)="onNext($event)"></app-segundo-nivel>
+<app-registro *ngIf="state==1" [inicio]="inicio" (next)="onNext($event)"></app-registro>
+<app-ayuda *ngIf="state==2" (next)="onNext($event)"></app-ayuda>
+<app-primer-nivel *ngIf="state==3" [ayuda]="ayuda" (next)="onNext($event)"></app-primer-nivel>
+<app-segundo-nivel *ngIf="state==4" [ayuda]="ayuda" (next)="onNext($event)"></app-segundo-nivel>
 <app-agradecimiento *ngIf="state==5"></app-agradecimiento>
+
+<!-- <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "square-jelly-box"><p style="color: white" > Loading... </p></ngx-spinner> -->
+<ngx-spinner></ngx-spinner>

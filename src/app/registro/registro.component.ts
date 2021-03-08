@@ -1,6 +1,9 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Formulario } from '../app.component';
+import { Paciente } from '../modelos/paciente';
+import Swal from 'sweetalert2';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-registro',
@@ -9,20 +12,29 @@ import { Formulario } from '../app.component';
 })
 export class RegistroComponent implements OnInit {
 
+  @Input() inicio:string;
   @Output() next: EventEmitter<Formulario> = new EventEmitter<Formulario>();
 
-  constructor( private router: Router) { }
+  constructor( private spinner: NgxSpinnerService ) { }
 
   ngOnInit() {
   }
 
-  registro(body: RegistroForm) {
+  registro(body: Paciente) {
     if (body.edad == '' ||  body.estudios == '' ||  body.lateralidad == '' ||  body.nombre == '' ||  body.sexo == ''){
-      alert('Completa todos los campos!')
+      Swal.fire({
+        icon: 'error',
+        text: 'Complete todos los campos!',
+      })
     } else {
+      this.spinner.show();
+      body.fechaCreacion = new Date();
       console.log(body)
-      alert('Registro completo!')
-      this.next.emit({ registro:body })
+      //alert('Registro completo!')
+      setTimeout(() => {
+        this.spinner.hide();
+      }, 1000);
+      this.next.emit({ paciente:body })
       // this.router.navigate(['./ayuda']);
     }
   }
@@ -34,16 +46,7 @@ export class RegistroComponent implements OnInit {
   ]
 
   lateralidades: any[] = [
-    { name: 'Diestro' },
-    { name: 'Zurdo' }
+    { name: 'Derecha' },
+    { name: 'Izquierda' }
   ]
 }
-
-export class RegistroForm {
-  public nombre?:string;
-  public sexo?:string;
-  public edad?:string;
-  public estudios?:string;
-
-  public lateralidad?:string;
-} 

@@ -1,6 +1,8 @@
-import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { Formulario } from '../app.component';
+import { Ayuda } from '../ayuda/ayuda.component';
+import { SegundoNivel } from '../modelos/segundo-nivel';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-segundo-nivel',
@@ -9,11 +11,14 @@ import { Formulario } from '../app.component';
 })
 export class SegundoNivelComponent implements OnInit {
 
+  @Input() ayuda:Ayuda;
   @Output() next: EventEmitter<Formulario> = new EventEmitter<Formulario>();
+  
   elem: any;
-  contador = 0;
-  aciertos = 0;
-  errores = 0;
+  contador:number = 0;
+  error:number = 0;
+  cont:number = 0;
+
   instruccion = "";
   texto='';
   imagen='';
@@ -27,29 +32,94 @@ export class SegundoNivelComponent implements OnInit {
     'Abajo',
     'Derecha inferior'
   ]
-  result = 0;
 
-  consigna='Visual';
+  inicio:any;
+  fin:any;
 
-  constructor(
-    private router: Router,
-  ) { }
+  consigna='';
+
+  segundoNivel: SegundoNivel = new SegundoNivel;
+
+  constructor() { }
 
   ngOnInit(): void {
     this.elem = document.documentElement;
-    this.openFullscreen();
+    
+    if(this.ayuda !=''){
+      this.consigna = this.ayuda.consigna;
+    }else{
+      this.consigna = 'Escrita';
+    }
+
+    if(this.consigna == "Acústica"){
+      this.imagen = "../../assets/img/parlante.gif";
+    }
+
+    this.segundoNivel.ronda.push(this.contador+1);    
+    this.inicio = new Date().getTime();
+
     this.bucle();
   }
 
   onHover(select: string){
     if (this.instruccion === this.movimientoOpuesto(select)) {
+      this.segundoNivel.fallos.push(this.error);
+      this.error = 0;
+
+      this.fin = new Date().getTime();
+
+      let resta:number = (this.fin - this.inicio).valueOf();
+      this.segundoNivel.duracion.push((resta/1000));
+
       this.correcta();
-      this.result++;
-      this.aciertos++;
       this.bucle();
+
+      this.segundoNivel.ronda.push(this.contador);
+      
+      this.inicio = new Date().getTime();
+
     } else {
-      this.errores++;
+      this.error++;
       this.incorrecta();
+    }
+  }
+
+  bucle(){
+    let value = Math.floor(Math.random() * (8));
+    while(this.instruccion == this.instrucciones[value]){
+      value = Math.floor(Math.random() * (8));
+    }
+    this.instruccion = this.instrucciones[value];
+    console.log("Orden: " + this.instruccion);
+
+    this.inicial();
+
+    this.contador++;
+
+    if(this.contador==9) {
+      this.segundoNivel.ronda.pop();
+      Swal.fire({
+        icon: 'success',
+        text: 'Nivel 2 completo!',
+      })
+      this.next.emit({segundoNivel:this.segundoNivel})
+    }
+  }
+
+  inicial(){
+    if(this.cont == 0){
+      if (this.consigna == 'Escrita'){
+        this.texto = this.instruccion;
+      } else if (this.consigna == 'Acústica'){
+        setTimeout(() => {
+          this.play(this.instruccion);
+        },1000);
+      } else if (this.consigna == 'Visual'){
+        setTimeout(() => {
+          this.cargarImagen(this.instruccion);
+        },1000);
+      }
+      this.cont++;
     }
   }
 
@@ -95,14 +165,13 @@ export class SegundoNivelComponent implements OnInit {
   }
 
   correcta(){
-    console.log("Opcion correcta!");
     if(this.consigna == 'Escrita'){
       this.texto = 'Correcto';
       setTimeout(() => {
         this.texto = this.instruccion;
       },
         1000);
-    } else if (this.consigna == 'Acustica'){
+    } else if (this.consigna == 'Acústica'){
       this.play("Correcto");
       setTimeout(() => {
         this.play(this.instruccion);
@@ -118,43 +187,23 @@ export class SegundoNivelComponent implements OnInit {
   }
 
   incorrecta(){
-    console.log("Opcion incorrecta!");
     if(this.consigna == 'Escrita'){
       this.texto = 'Opción incorrecta';
       setTimeout(() => {
         this.texto = this.instruccion;
       },
         1000);
-    } else if (this.consigna == 'Acustica'){
+    } else if (this.consigna == 'Acústica'){
       this.play("Incorrecta");
       setTimeout(() => {
         this.play(this.instruccion);
-      },
-        1000);
-      this.play(this.instruccion);
+      }, 2000);
     } else if (this.consigna == 'Visual'){
       this.imagen = "../../assets/img/incorrecto.png";
       setTimeout(() => {
         this.cargarImagen(this.instruccion);
       },
         1000);
-    }
-  }
-
-  bucle(){
-    let value = Math.floor(Math.random() * (8));
-    while(this.instruccion == this.instrucciones[value]){
-      value = Math.floor(Math.random() * (8));
-    }
-    this.instruccion = this.instrucciones[value];
-    console.log("Orden: " + this.instruccion);
-    this.correcta();
-
-    this.contador++;
-    if(this.contador==9) {
-      alert('Nivel completo!')
-      // this.router.navigate(['./agradecimiento']);
-      this.next.emit({segundoNivel:[1,2,3,4,5,6,7,8,9]})
     }
   }
 

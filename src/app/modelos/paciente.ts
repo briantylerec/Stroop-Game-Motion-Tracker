@@ -1,4 +1,5 @@
 export class Paciente {
+    cedula?: string = "";
     nombre?: string = ""
     sexo?: string = ""
     edad?: string = ""

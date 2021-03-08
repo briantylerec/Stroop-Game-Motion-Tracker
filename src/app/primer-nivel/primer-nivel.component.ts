@@ -1,5 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Formulario } from '../app.component';
+import { Ayuda } from '../ayuda/ayuda.component';
+import { PrimerNivel } from '../modelos/primer-nivel';
+import Swal from 'sweetalert2';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-primer-nivel',
@@ -9,11 +13,13 @@ import { Formulario } from '../app.component';
 
 export class PrimerNivelComponent implements OnInit {
 
+  @Input() ayuda:Ayuda;
   @Output() next: EventEmitter<Formulario> = new EventEmitter<Formulario>();
 
   elem: any;
   contador:number = 0;
   error:number = 0;
+  cont:number = 0;
 
   instruccion = "";
   texto = '';
@@ -23,7 +29,7 @@ export class PrimerNivelComponent implements OnInit {
   inicio:any;
   fin:any;
 
-  consigna = 'Visual';
+  consigna = '';
 
   primerNivel: PrimerNivel = new PrimerNivel;
 
@@ -32,36 +38,40 @@ export class PrimerNivelComponent implements OnInit {
   ngOnInit(): void {
     this.elem = document.documentElement;
     this.openFullscreen();
-
-    console.log('Ronda ' + this.primerNivel.ronda[0]);
     
+    if(this.ayuda != ''){
+      this.consigna = this.ayuda.consigna;
+    }else{
+      this.consigna = 'Escrita';
+    }
+    console.log("------- ", this.consigna);
+    if(this.consigna == "Acústica"){
+      this.imagen = "../../assets/img/parlante.gif";
+    }
+
+    this.primerNivel.ronda.push(this.contador+1);    
     this.inicio = new Date().getTime();
-    console.log('Inicio ' + this.inicio);
 
     this.bucle();
   }
 
   onHover(select: string) {
     if (this.instruccion === this.movimientoOpuesto(select)) {
+      this.primerNivel.fallos.push(this.error);
+      this.error = 0;
 
       this.fin = new Date().getTime();
-      console.log("Fin: " + this.fin);
+
       let resta:number = (this.fin - this.inicio).valueOf();
-      console.log('resta '+resta);
-      this.primerNivel.duracion.push(resta);
+      this.primerNivel.duracion.push((resta/1000));
 
       this.correcta();
       this.bucle();
 
       this.primerNivel.ronda.push(this.contador);
-      console.log('Ronda ' + this.primerNivel.ronda[this.contador]);
       
       this.inicio = new Date().getTime();
-      console.log('Inicio ' + this.inicio);
 
-      console.log('ronda: ' + this.primerNivel.ronda[this.contador] + ' tiempo: ' + (this.fin-this.inicio));
-
-      this.primerNivel.fallos.push(this.error);
     } else {
       this.error++;
       this.incorrecta();
@@ -75,15 +85,35 @@ export class PrimerNivelComponent implements OnInit {
     }
     this.instruccion = this.instrucciones[value];
     console.log("Orden: " + this.instruccion);
-    
-    this.correcta();
-    
+        
+    this.inicial();
+
     if (this.contador == 8) {
-      alert('Nivel completo!')
-      // this.router.navigate(['./segundo-nivel']);
+      this.primerNivel.ronda.pop();
+      Swal.fire({
+        icon: 'success',
+        text: 'Nivel 1 completo!',
+      })
       this.next.emit({primerNivel:this.primerNivel})
     }
     this.contador++;
+  }
+
+  inicial(){
+    if(this.cont == 0){
+      if (this.consigna == 'Escrita'){
+        this.texto = this.instruccion;
+      } else if (this.consigna == 'Acústica'){
+        setTimeout(() => {
+          this.play(this.instruccion);
+        },1000);
+      } else if (this.consigna == 'Visual'){
+        setTimeout(() => {
+          this.cargarImagen(this.instruccion);
+        },1000);
+      }
+      this.cont++;
+    }
   }
 
   movimientoOpuesto(select) {
@@ -111,14 +141,13 @@ export class PrimerNivelComponent implements OnInit {
   }
 
   correcta() {
-    //console.log("Opcion correcta!");
     if (this.consigna == 'Escrita') {
       this.texto = 'Correcto';
       setTimeout(() => {
         this.texto = this.instruccion;
       },
         1000);
-    } else if (this.consigna == 'Acustica') {
+    } else if (this.consigna == 'Acústica') {
       this.play("Correcto");
       setTimeout(() => {
         this.play(this.instruccion);
@@ -134,19 +163,17 @@ export class PrimerNivelComponent implements OnInit {
   }
 
   incorrecta() {
-    //console.log("Opcion incorrecta!");
     if (this.consigna == 'Escrita') {
       this.texto = 'Opción incorrecta';
       setTimeout(() => {
         this.texto = this.instruccion;
       },
         1000);
-    } else if (this.consigna == 'Acustica') {
+    } else if (this.consigna == 'Acústica') {
       this.play("Incorrecta");
-      setTimeout(() => {
+      setTimeout(() => {  
         this.play(this.instruccion);
-      },
-        1000);
+      }, 2000);
     } else if (this.consigna == 'Visual') {
       this.imagen = "../../assets/img/incorrecto.png";
       setTimeout(() => {
@@ -176,10 +203,4 @@ export class PrimerNivelComponent implements OnInit {
     sound = "../../assets/audio/" + sound + ".mp3";
     sound && (new Audio(sound)).play()
   }
-}
-
-export class PrimerNivel {
-  ronda?: number[]=[];
-  duracion?: number[]=[];
-  fallos?:number[]=[];
 }
