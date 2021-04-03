@@ -90,10 +90,10 @@ export class PrimerNivelComponent implements OnInit {
 
     if (this.contador == 8) {
       this.primerNivel.ronda.pop();
-      Swal.fire({
-        icon: 'success',
-        text: 'Nivel 1 completo!',
-      })
+      // Swal.fire({
+      //   icon: 'success',
+      //   text: 'Nivel 1 completo!',
+      // })
       this.next.emit({primerNivel:this.primerNivel})
     }
     this.contador++;

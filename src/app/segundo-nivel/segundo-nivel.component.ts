@@ -98,10 +98,10 @@ export class SegundoNivelComponent implements OnInit {
 
     if(this.contador==9) {
       this.segundoNivel.ronda.pop();
-      Swal.fire({
-        icon: 'success',
-        text: 'Nivel 2 completo!',
-      })
+      // Swal.fire({
+      //   icon: 'success',
+      //   text: 'Nivel 2 completo!',
+      // })
       this.next.emit({segundoNivel:this.segundoNivel})
     }
   }
